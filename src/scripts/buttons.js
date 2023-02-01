@@ -1,3 +1,4 @@
+import { Requests } from "./requests.js"
 import { ServiceForm } from "./serviceForm.js"
 
 export const Buttons = () => {
@@ -10,6 +11,8 @@ export const Buttons = () => {
 
     <section class="serviceRequests">
         <h2>Requests</h2>
+        ${Requests()}
     </section>
+    <
     `
 }

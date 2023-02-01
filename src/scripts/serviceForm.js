@@ -31,6 +31,8 @@ export const ServiceForm = () => {
             <label class="label" for="lengthOfParty">How long will the party be?</label>
             <input type="number" name="lengthOfParty" class="input" />
         </div>
+
+        <button class="button" id="submitRequest">Submit Request</button>
     `
     return html
 }
