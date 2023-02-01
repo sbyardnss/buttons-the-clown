@@ -1,4 +1,4 @@
-import { getClowns, getRequests } from "./dataAccess.js";
+import { deleteRequest, getClowns, getRequests, sendCompletion } from "./dataAccess.js";
 
 const convertRequestsToList = (obj) => {
     const clowns = getClowns()
@@ -38,3 +38,28 @@ export const Requests = () => {
     `
     return html
 }
+
+const mainContainer = document.querySelector("#container")
+
+mainContainer.addEventListener("click", click => {
+    if (click.target.id.startsWith("request--")) {
+        const [,requestId] = click.target.id.split("--")
+        deleteRequest(parseInt(requestId))
+    }
+})
+
+mainContainer.addEventListener(
+    "change",
+    (event) => {
+        if (event.target.id === "clowns") {
+            const [requestId, clownId] = event.target.value.split("--")
+
+            const completion = {
+                "clownId": clownId,
+                "requestId": requestId,
+                "date": Date.now()
+            }
+            sendCompletion(completion)
+        }
+    }
+)

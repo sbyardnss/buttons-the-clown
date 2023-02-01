@@ -73,7 +73,7 @@ export const sendCompletion = (userServiceRequest) => {
         body: JSON.stringify(userServiceRequest)
     }
     return fetch(`${API}/completions`, fetchOptions)
-        .then(respons => response.json())
+        .then(response => response.json())
         .then(() => {
             mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
         })
