@@ -53,3 +53,38 @@ export const sendRequest = (userServiceRequest) => {
             mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
         })
 }
+
+
+export const deleteRequest = (id) => {
+    return fetch(`${API}/requests/${id}`, { method: "DELETE" })
+    .then(
+        () => {
+            mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
+        }
+    )
+}
+
+export const sendCompletion = (userServiceRequest) => {
+    const fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userServiceRequest)
+    }
+    return fetch(`${API}/completions`, fetchOptions)
+        .then(respons => response.json())
+        .then(() => {
+            mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
+        })
+}
+
+export const fetchCompletions = () => {
+    return fetch(`${API}/completions`)
+        .then(response => response.json())
+        .then(
+            (data) => {
+                applicationState.completions = data
+            }
+        )
+}

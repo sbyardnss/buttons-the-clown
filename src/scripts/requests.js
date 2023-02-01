@@ -10,7 +10,7 @@ const convertRequestsToList = (obj) => {
                 <option value="0">Choose</option>
                 ${
                     clowns.map(
-                        clown => {
+                        (clown) => {
                             return `<option value="${obj.id}--${clown.id}">${clown.name}</option>`
                         }
                     ).join("")
