@@ -49,7 +49,8 @@ mainContainer.addEventListener(
             const eventAddress = document.querySelector("input[name='serviceAddress']").value
             const numOfKids = document.querySelector("input[name='numOfKids']").value 
             const eventDate = document.querySelector("input[name='date']").value 
-            const eventLength = document.querySelector("input[name='lengthOfParty']").value 
+            const eventLength = document.querySelector("input[name='lengthOfParty']").value
+            const completionStatus = false; 
             
             const dataToSendToAPI = {
                 parentName: parName,
@@ -58,7 +59,8 @@ mainContainer.addEventListener(
                 address: eventAddress,
                 numberOfKids: numOfKids,
                 date: eventDate,
-                length: eventLength
+                length: eventLength,
+                completed: completionStatus
             }
 
             sendRequest(dataToSendToAPI)

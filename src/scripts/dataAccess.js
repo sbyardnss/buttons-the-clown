@@ -19,9 +19,18 @@ export const fetchRequests = () => {
             }
         )
 }
+//old getrequests function
+// export const getRequests = () => {
+//     return applicationState.requests.map(request => ({...request}))
+// }
+
+//new getrequests function
 export const getRequests = () => {
-    return applicationState.requests.map(request => ({...request}))
+    const newArray = applicationState.requests.sort((a, b) => (a.completed === b.completed) ? 0 : (a.completed > b.completed) ? 1 : -1)
+    return newArray
 }
+
+
 
 export const fetchClowns = () => {
     return fetch(`${API}/clowns`)
@@ -87,4 +96,19 @@ export const fetchCompletions = () => {
                 applicationState.completions = data
             }
         )
+}
+
+export const changeRequest = (objectId, object) => {
+    const fetchOptions = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(object)
+    }
+    return fetch(`${API}/requests/${objectId}`, fetchOptions)
+    .then(response => response.json())
+    .then(() => {
+        document.querySelector("#container").dispatchEvent(new CustomEvent("stateChanged"))
+    })
 }

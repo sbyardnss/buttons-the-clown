@@ -13,6 +13,6 @@ export const Buttons = () => {
         <h2>Requests</h2>
         ${Requests()}
     </section>
-    <
+    
     `
 }

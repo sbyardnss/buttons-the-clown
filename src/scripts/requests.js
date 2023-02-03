@@ -1,10 +1,11 @@
-import { deleteRequest, getClowns, getRequests, sendCompletion } from "./dataAccess.js";
+import { changeRequest, deleteRequest, getClowns, getRequests, sendCompletion } from "./dataAccess.js";
 
 const convertRequestsToList = (obj) => {
     const clowns = getClowns()
     const requests = getRequests()
     let html = ""
-    html += `<li>${obj.eventTitle}
+    if (obj.completed === false) {
+    html += `<li class="openRequests">${obj.eventTitle}
     
             <select class="clowns" id="clowns">
                 <option value="0">Choose</option>
@@ -22,6 +23,12 @@ const convertRequestsToList = (obj) => {
                 Delete
             </button>
         </li>`
+        }
+    if (obj.completed === true) {
+        html += `<li class="closedRequests">${obj.eventTitle}
+            <button class="request__delete" id="request--${obj.id}">Delete</button>
+        </li>`
+    }
 
     return html
 }
@@ -48,6 +55,9 @@ mainContainer.addEventListener("click", click => {
     }
 })
 
+
+//old version
+/*
 mainContainer.addEventListener(
     "change",
     (event) => {
@@ -60,6 +70,23 @@ mainContainer.addEventListener(
                 "date": Date.now()
             }
             sendCompletion(completion)
+        }
+    }
+)
+*/
+
+
+mainContainer.addEventListener(
+    "change",
+    event => {
+        if (event.target.id === "clowns") {
+            const [requestId, clownId] = event.target.value.split("--")
+            const requests = getRequests()
+            const foundRequest = requests.find((request) => {
+                return request.id === parseInt(requestId)
+            })
+            foundRequest.completed = true
+            changeRequest(requestId, foundRequest)
         }
     }
 )
