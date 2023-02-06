@@ -1,5 +1,7 @@
 import { changeRequest, deleteRequest, getClowns, getRequests, sendCompletion } from "./dataAccess.js";
 
+//old version that works before table
+/*
 const convertRequestsToList = (obj) => {
     const clowns = getClowns()
     const requests = getRequests()
@@ -32,7 +34,52 @@ const convertRequestsToList = (obj) => {
 
     return html
 }
+*/
 
+
+const convertRequestsToList = (obj) => {
+    const clowns = getClowns()
+    const requests = getRequests()
+    let html = "<tr>"
+    if (obj.completed) {
+        html += `
+        <td class="completions">${obj.eventTitle}</td>
+        <td class="completions"></td>
+        <td class="completions">
+        <button class="request__delete" id="request--${obj.id}">
+        Delete
+        </button></td>
+        </tr>
+        `
+    }
+    else {
+        html += `
+        <td>${obj.eventTitle}
+        </td>
+        <td><select class="clowns" id="clowns">
+            <option value="0">Choose</option>
+                ${
+                    clowns.map(
+                        (clown) => {
+                            return `<option value="${obj.id}--${clown.id}">${clown.name}</option>`
+                        }
+                    ).join("")
+                }
+            </select>
+        </td>
+        <td>
+            <button class="request__delete" id="request--${obj.id}">Delete</button>
+        </td>
+        `
+    }
+    
+    return html
+}
+
+
+//original version that works. not a table
+
+/*
 export const Requests = () => {
     const requests = getRequests()
     const requstList = ""
@@ -45,6 +92,8 @@ export const Requests = () => {
     `
     return html
 }
+*/
+
 
 const mainContainer = document.querySelector("#container")
 
@@ -54,6 +103,28 @@ mainContainer.addEventListener("click", click => {
         deleteRequest(parseInt(requestId))
     }
 })
+
+
+
+
+
+//table version of html code
+
+export const Requests = () => {
+    const requests = getRequests()
+    let html = ""
+    html += `<table class="requestTable">
+    <tr>
+        <th>Description</th>
+        <th>Completed</th>
+        <th>Delete</th>
+    </tr>`
+    let listItems = requests.map(convertRequestsToList)
+    html += listItems.join("")
+    html += `</table>`
+    return html
+}
+
 
 
 //old version
