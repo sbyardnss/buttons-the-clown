@@ -36,7 +36,7 @@ const convertRequestsToList = (obj) => {
 }
 */
 
-
+//table entries creation
 const convertRequestsToList = (obj) => {
     const clowns = getClowns()
     const requests = getRequests()
@@ -114,10 +114,10 @@ export const Requests = () => {
     const requests = getRequests()
     let html = ""
     html += `<table class="requestTable">
-    <tr>
-        <th>Description</th>
-        <th>Completed</th>
-        <th>Delete</th>
+    <tr id="tableHead">
+        <th class="tableHeader">Description</th>
+        <th class="tableHeader">Completed</th>
+        <th class="tableHeader">Delete</th>
     </tr>`
     let listItems = requests.map(convertRequestsToList)
     html += listItems.join("")
